@@ -1,6 +1,8 @@
 library(marinecs100b)
 remotes::install_github("MarineCS-100B/marinecs100b")
 
+
+
 # Review: write a function ------------------------------------------------
 
 # P1 Describe succinctly what the following code does. This should be a
@@ -78,18 +80,15 @@ hours_extreme_per_day
 # God bless the internet
 extreme_hours_day <- function(site, season, hotorcold) {
   if (hotorcold == "cold") {
-    # Cold (temperature <= -4)
-    n_extreme <- sum(kefj_site == site &
-                       kefj_season == season &
-                       kefj_temperature <= -4 &
-                       kefj_exposure == "air")
-  } else if (hotorcold == "hot") {
-    # Hot (temperature >= 25)
-    n_extreme <- sum(kefj_site == site &
-                       kefj_season == season &
-                       kefj_temperature >= 25 &
-                       kefj_exposure == "air")
+    is_extreme <- kefj_temperature <= -4
+  } else {
+    is_extreme <- kefj_temperature >= 25
   }
+    n_extreme <- sum(kefj_site == site &
+                       kefj_season == season &
+                       is_extreme &
+                       kefj_exposure == "air")
+
   n_total <- sum(kefj_site == site &
                    kefj_season == season)
   hours_extreme <- n_extreme * 30 / 60
